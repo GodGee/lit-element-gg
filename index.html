@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <!-- Register service worker if supported. -->
+    <!--
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+  -->
+
+    <!-- Load polyfills -->
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>
+
+    <!-- Load components via WebComponents.waitFor -->
+    <script type="module">
+      window.WebComponents = window.WebComponents || {
+        waitFor(cb) {
+          addEventListener('WebComponentsReady', cb)
+        },
+      }
+      WebComponents.waitFor(async () => {
+        import('./src/start-lit-element.js')
+        import('./src/1.定义一个渲染模板/1.1 基本规则/index.js')
+        import('./src/1.定义一个渲染模板/1.2 动态更改模板内容/index.js')
+        import('./src/2.在模板中使用属性、循环和条件判断/index.js')
+        import('./src/3.给模板元素绑定属性值/index.js')
+        import('./src/4.使用slot占位符给模板元素渲染子节点/index.js')
+        import('./src/5.多个模板组合成页面/main.js')
+        import('./src/Styles样式/5.Shadow DOM样式概述/1.设置阴影树的样式.js')
+        import('./src/Styles样式/5.Shadow DOM样式概述/2.设置组件本身的样式.js')
+        import('./src/Styles样式/5.Shadow DOM样式概述/3.设置组件子节点的样式.js')
+      })
+    </script>
+
+    <!-- Change stuff here for your app -->
+    <meta name="description" content="start-lit-element" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>start-lit-element</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="shortcut icon" href="/manifest/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8" />
+    <style>
+      my-element-host {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+    To configure starting state of the checkbox from markup: 
+    <start-lit-element pie="true"> 
+  -->
+
+    <start-lit-element>
+      <!-- Placeholders to improve time to first paint -->
+      <h1>Start LitElement!</h1>
+      <p>Hello World from LitElement</p>
+
+      <!-- Check for JavaScript -->
+      <p id="jsyes"></p>
+      <script type="text/javascript">
+        document.getElementById('jsyes').innerHTML = 'Loading...'
+      </script>
+      <noscript>Could not render the custom element. Check that JavaScript is enabled.</noscript>
+    </start-lit-element>
+
+    <hr />
+    <h5 style="color: green">基本规则</h5>
+    <my-element></my-element>
+
+    <hr />
+    <h5 style="color: green">动态更改模板内容</h5>
+    <update-properties></update-properties>
+
+    <hr />
+    <h5 style="color: green">在模板中使用属性、循环和条件判断</h5>
+    <my-element2></my-element2>
+
+    <hr />
+    <h5 style="color: green">给模板元素绑定属性值</h5>
+    <my-element3></my-element3>
+
+    <hr />
+    <h5 style="color: green">使用slot占位符给模板元素渲染子节点</h5>
+    <!-- Assign child to a specific slot -->
+    <my-element4>
+      <p slot="two">Include me in slot "two".</p>
+    </my-element4>
+
+    <!-- 
+      Named slots only accept children with a matching `slot` attribute. 
+      Children with a `slot` attribute can only go into a slot with a matching name. 
+    -->
+    <my-element4>
+      <p slot="one">Include me in slot "one".</p>
+      <p slot="nope">This one will not render at all.</p>
+      <p>No default slot, so this one won't render either.</p>
+    </my-element4>
+
+    <hr />
+    <h5 style="color: green">多个模板组合成页面</h5>
+    <my-page></my-page>
+
+    <hr />
+    <h5 style="color: green">Shadow DOM样式概述-1.设置阴影树的样式</h5>
+    <my-element-shadow></my-element-shadow>
+
+    <hr />
+    <h5 style="color: green">Shadow DOM样式概述-2.设置组件本身的样式</h5>
+    <my-element-host></my-element-host>
+    <my-element-host hidden></my-element-host>
+    <my-element-host class="blue"></my-element-host>
+
+    <hr />
+    <h5 style="color: green">Shadow DOM样式概述-3.设置组件子节点的样式</h5>
+    <my-element-slotted>
+      <p>Slotted paragraph</p>
+      <span slot="hi">Slotted span inside a div</span>
+    </my-element-slotted>
+    <my-element-slotted>
+      <div>Stylable with ::slotted()</div>
+    </my-element-slotted>
+    <my-element-slotted>
+      <div><p>Not stylable with ::slotted()</p></div>
+    </my-element-slotted>
+  </body>
+</html>
